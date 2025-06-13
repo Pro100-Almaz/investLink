@@ -48,32 +48,7 @@ This backend application is setup with `Docker`. Nevertheless, you can see the f
    docker exec backend_app pytest
    ```
 
-4. `Pre-Commit` setup:
-    ```shell
-    # Make sure you are in the ROOT project directory
-    pre-commit install
-    pre-commit autoupdate
-    ```
-
-5. Backend app credentials setup:
-    If you are not used to VIM or Linux CLI, then ignore the `echo` command and do it manually. All the secret variables for this template are located in `.env.example`.
-
-    If you want to have another name for the secret variables, don't forget to change them also in:
-
-    * `backend/src/config/base.py`
-    * `docker-compose.yaml`
-
-    ```shell
-    # Make sure you are in the ROOT project directory
-    touch .env
-
-    echo "SECRET_VARIABLE=SECRET_VARIABLE_VALUE" >> .env
-    ```
-
-6. `CODEOWNERS` setup:
-    Go to `.github/` and open `CODEOWNERS` file. This file is to assign the code to a specific team member so you can distribute the weights of the project clearly.
-
-7. Docker setup:
+4. Docker setup:
    ```shell
     # Make sure you are in the ROOT project directory
     chmod +x backend/entrypoint.sh
@@ -85,7 +60,7 @@ This backend application is setup with `Docker`. Nevertheless, you can see the f
     docker-compose up -d --build
    ```
 
-8. (IMPORTANT) Database setup:
+5. (IMPORTANT) Database setup:
    ```shell
     # (Docker) Generate revision for the database auto-migrations
     docker exec backend_app alembic revision --autogenerate -m "YOUR MIGRATION TITLE"
@@ -96,22 +71,11 @@ This backend application is setup with `Docker`. Nevertheless, you can see the f
     alembic upgrade head    # to register the database classes
    ```
 
-9. Go to https://about.codecov.io/, and sign up with your github to get the `CODECOV_TOKEN`
-
-10. Go to your GitHub and register all the secret variables (look in .env.example) in your repository (`settings` $\rightarrow$ (scroll down a bit) `Secrets` $\rightarrow$ `Actions` $\rightarrow$ `New repository secret`)
-
-**IMPORTANT**: Without the secrets registered in Codecov and GitHub, your `CI` will fail and life will be horrible 🤮🤬
-**IMPORTANT**: Remember to always run the container update every once in a while. Without the arguments `-d --build`, your `Docker` dashboard will be full of junk containers!
+6. Go to https://about.codecov.io/, and sign up with your github to get the `CODECOV_TOKEN`
 
 ## Project Structure
 
 ```shell
-.github/
-├── workflows/
-    ├── ci-backend.yaml                 # A CI file for the backend app that consists of `build`, `code-style`, and `test`
-├── CODEOWNERS                          # A configuration file to distribute code responsibility
-├── semantic.yaml                       # A configuration file for ensuring an automated semantic commit message
-
 backend/
 ├── coverage/
 ├── src/
@@ -181,8 +145,7 @@ backend/
     ├── unit_tests/                     # Unit tests
         ├── test_src.py                 # Testing the src directory's version
     ├── conftest.py                     # The fixture codes and other base test codes
-├── Dockerfile                          # Docker configuration file for backend application
-├── README.md                           # Documentation for backend app
+├── Dockerfile                          # Docker configuration file for backend application                           # Documentation for backend app
 ├── entrypoint.sh                       # A script to restart backend app container if postgres is not started
 ├── alembic.ini                         # Automatic database migration configuration
 ├── pyproject.toml                      # Linter and test main configuration file
@@ -195,14 +158,5 @@ README.md                               # The main documentation file for this t
 codecov.yaml                            # The configuration file for automated testing CI with codecov.io
 docker-compose.yaml                     # The main configuration file for setting up a multi-container Docker
 ```
-
-## Final Step
-
-You can delete these 3 files (or change its content based on your need):
-- `LICENSE.md`
-- `README.md`
-- `backend/README.md`
-
-Enjoy your development and may your technology be forever useful to everyone 😉🚀🧬
 
 ---
